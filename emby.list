@@ -1,0 +1,11 @@
+# > 流媒体Odyssey服务器
+HOST-SUFFIX,cf.odysseyplus.site,emby
+HOST-SUFFIX,sg.odysseyplus.site,emby
+HOST-SUFFIX,sp.odysseyplus.site,emby
+HOST-SUFFIX,ru.odysseyplus.site,emby
+
+# > 流媒体卷毛鼠服务器
+HOST-SUFFIX,us.jmsooo.com,emby
+HOST-SUFFIX,cf1.jmsooo.com,emby
+HOST-SUFFIX,ru2.jmsooo.com,emby
+HOST-SUFFIX,sg.jmsooo.com,emby

@@ -158,8 +158,6 @@ http://line.gofast-tv.me:80/play/live.php?mac=00:1A:79:6F:5A:5D&stream=941685&ex
 http://222.132.191.125:9901/tsfile/live/1005_1.m3u8
 #EXTINF:-1 catchup="append" catchup-source="?playseek=${(b)yyyyMMddHHmmss}-${(e)yyyyMMddHHmmss}" tvg-id="5" tvg-name="CCTV5" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv5.png" group-title="VamosChuck ★ 体育-咪咕直播",CCTV-5体育 by VamosChuck
 http://39.135.138.60:18890/TVOD/88888910/224/3221225633/index.m3u8
-#EXTINF:-1 tvg-id="7242" tvg-name="魅力足球" tvg-logo="http://n.ysyz.top:99/buyaolian/mlzq.png" group-title="VamosChuck ★ 体育-咪咕直播",魅力足球 by VamosChuck
-http://183.207.255.188/live/program/live/mlyyhd/4000000/mnf.m3u8
 #EXTINF:-1 tvg-logo="" group-title="VamosChuck ★ 体育-咪咕直播",曼联MUTV by VamosChuck
 https://bcovlive-a.akamaihd.net/r2d2c4ca5bf57456fb1d16255c1a535c8/eu-west-1/6058004203001/playlist.m3u8
 #EXTINF:-1 tvg-logo="" group-title="VamosChuck ★ 体育-咪咕直播",皇马RMTV by VamosChuck

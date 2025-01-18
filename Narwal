@@ -1,0 +1,5 @@
+IP-CIDR,162.159.200.1/32,DIRECT,no-resolve // 云鲸
+IP-CIDR,116.203.151.74/32,DIRECT,no-resolve // 云鲸
+IP-CIDR,193.182.111.12/32,DIRECT,no-resolve // 云鲸
+IP-CIDR,78.46.102.180/32,DIRECT,no-resolve // 云鲸
+IP-CIDR,84.16.67.12/32,DIRECT,no-resolve // 云鲸

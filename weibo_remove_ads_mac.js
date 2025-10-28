@@ -1,16 +1,17 @@
 // 微博去广告 Surge Mac+iOS 通用版
-// 修改时间：2025/10/29
+// 修改时间：2025/10/28
 
 let body = $response?.body;
 let url = $request?.url;
 if (!body || !url) $done({});
 
+// 解析 JSON
 let obj;
 try {
     obj = JSON.parse(body);
 } catch (e) {
     console.log("解析失败:", e);
-    $done({ body }); // 解析失败就原样返回
+    $done({ body }); // 解析失败直接原样返回
 }
 
 // ----------------- 清理函数 -----------------
@@ -70,10 +71,10 @@ function cleanComment(item) {
     delete item.pic_bg_new_dark;
     delete item.pic_bg_type;
     cleanUser(item.user);
-
-    if (Array.isArray(item.comments)) {
-        for (let i = item.comments.length - 1; i >= 0; i--) {
-            cleanComment(item.comments[i]);
+    const comments = item.comments;
+    if (Array.isArray(comments)) {
+        for (let i = comments.length - 1; i >= 0; i--) {
+            if (comments[i]) cleanComment(comments[i]);
         }
     }
 }
@@ -90,8 +91,6 @@ function removeVipSuffix(data) {
 function processCommentArray(array = []) {
     for (let i = array.length - 1; i >= 0; i--) {
         const item = array[i];
-        if (!item) continue;
-
         if (
             item?.adType ||
             item?.business_type === "hot" ||
@@ -103,7 +102,6 @@ function processCommentArray(array = []) {
             array.splice(i, 1);
             continue;
         }
-
         cleanComment(item);
         if (item.data) cleanComment(item.data);
     }
@@ -157,6 +155,10 @@ function processFeedArray(array = []) {
             data?.desc === "相关搜索" ||
             data?.card_ad_style === 1 ||
             data?.is_ad_card === 1 ||
+            data?.is_detail === true ||
+            data?.card_id === "search_card" ||
+            (data?.group && data?.anchorId) ||
+            data?.card_type === 227 ||
             (item?.category === "group" && groupItemIds.has(item?.itemId)) ||
             (item?.category === "card" && cardItemIds.has(data?.itemid)) ||
             (item?.itemId && keywords.some(k => String(item.itemId).includes(k))) ||
@@ -174,7 +176,9 @@ function processFeedArray(array = []) {
             removeVipSuffix(data);
         }
 
-        if (Array.isArray(item.items)) processFeedArray(item.items);
+        if (Array.isArray(item.items)) {
+            processFeedArray(item.items);
+        }
     }
 }
 
@@ -186,16 +190,8 @@ try {
         if (obj.items) processFeedArray(obj.items);
     } else if (url.includes("statuses/container_detail")) {
         if (Array.isArray(obj?.pageHeader?.data?.items)) processFeedArray(obj.pageHeader.data.items);
-        if (obj?.detailInfo?.status) {
-            cleanUser(obj.detailInfo.status.user);
-            cleanExtend(obj.detailInfo.status);
-            removeVipSuffix(obj.detailInfo.status);
-        }
-        if (obj?.detailInfo?.extend) {
-            cleanUser(obj.detailInfo.extend.user);
-            cleanExtend(obj.detailInfo.extend);
-            removeVipSuffix(obj.detailInfo.extend);
-        }
+        if (obj?.detailInfo?.status) { cleanUser(obj.detailInfo.status.user); cleanExtend(obj.detailInfo.status); removeVipSuffix(obj.detailInfo.status); }
+        if (obj?.detailInfo?.extend) { cleanUser(obj.detailInfo.extend.user); cleanExtend(obj.detailInfo.extend); removeVipSuffix(obj.detailInfo.extend); }
     } else if (url.includes("comments/build_comments")) {
         if (Array.isArray(obj.datas)) processCommentArray(obj.datas);
         if (Array.isArray(obj.root_comments)) processCommentArray(obj.root_comments);
